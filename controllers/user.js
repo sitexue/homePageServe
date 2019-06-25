@@ -10,7 +10,7 @@ const userInfoDeal = (item) => {
     delete item.dataValues.password
     delete item.dataValues.status
     delete account
-    item.dataValues.creatTime = item.dataValues.creatTime ? moment(item.dataValues.creatTime).format('YYYY-MM-DD HH:mm:ss') : ''
+    item.dataValues.createTime = item.dataValues.createTime ? moment(item.dataValues.createTime).format('YYYY-MM-DD HH:mm:ss') : ''
     item.dataValues.lastTime = item.dataValues.lastTime ? moment(item.dataValues.lastTime).format('YYYY-MM-DD HH:mm:ss') : ''
     return item
 }
@@ -72,7 +72,7 @@ const reg = async (ctx, next) => {
             password,
             name: account,
             time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            creatTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+            createTime: moment().format('YYYY-MM-DD HH:mm:ss'),
             level: 1
         }
     }).spread(function (user, created) {
@@ -82,7 +82,8 @@ const reg = async (ctx, next) => {
             ctx.error(214, '用户已存在');
         }
     }).catch(err => {
-        ctx.error(214, err.errors[0].message);
+        console.error(err)
+        ctx.error(214, '服务器出错');
     })
 }
 

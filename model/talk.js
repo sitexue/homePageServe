@@ -32,9 +32,9 @@ const article = sequelize.define('article', {
 			},
 		}
 	},
-	creatTime: {
+	createTime: {
 		type: Sequelize.DATE,
-		field: 'creat_time'
+		field: 'create_time'
 	},
 	updateTime: {
 		type: Sequelize.DATE,

@@ -45,9 +45,9 @@ const user = sequelize.define('user', {
 		type: Sequelize.DATE,
 		field: 'last_time'
 	},
-	creatTime: {
+	createTime: {
 		type: Sequelize.DATE,
-		field: 'creat_time'
+		field: 'create_time'
 	},
 	location: {
 		type: Sequelize.STRING,

@@ -15,7 +15,7 @@ const list = async (ctx, next) => {
     page = Number(page);
     const offset = limit * (page - 1);
     const result = await notes.findAndCountAll({
-        attributes: ['id', 'title', 'intro', 'creatTime', 'tag'],
+        attributes: ['id', 'title', 'intro', 'createTime', 'tag'],
         where: {
             status: 1
         },
@@ -27,7 +27,7 @@ const list = async (ctx, next) => {
     })
 
     const list = result.rows.map(item => {
-        item.dataValues.creatTime = moment(item.dataValues.creatTime).format('YYYY-MM-DD HH:mm:ss')
+        item.dataValues.createTime = moment(item.dataValues.createTime).format('YYYY-MM-DD HH:mm:ss')
         return item
     })
 
@@ -70,7 +70,7 @@ const add = async (ctx, next) => {
         md,
         html
     } = ctx.request.body;
-    const creatTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const createTime = moment().format('YYYY-MM-DD HH:mm:ss');
     try{
         await notes.create({
             title,
@@ -78,13 +78,14 @@ const add = async (ctx, next) => {
             tag,
             md,
             html,
-            creatTime
+            createTime
         })
 
         ctx.success(200, '提交成功');
     }
     catch(err){
-        ctx.error(214, err.errors[0].message);
+        console.error(err)
+        ctx.error(214, '服务器出错');
     }
 }
 
@@ -120,7 +121,8 @@ const update = async (ctx, next) => {
         ctx.success(200, '提交成功');
     }
     catch(err){
-        ctx.error(214, err.errors[0].message);
+        console.error(err)
+        ctx.error(214, '服务器出错');
     }
 }
 

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
-const notes = sequelize.define('notes', {
+const photoAlbum = sequelize.define('photo_album', {
 	title: {
 		type: Sequelize.TEXT,
 		validate: {
@@ -11,35 +11,14 @@ const notes = sequelize.define('notes', {
 			},
 		}
 	},
-	intro: {
-		type: Sequelize.TEXT,
-	},
-	md: {
-		type: Sequelize.TEXT,
+	coverImg: {
+		type: Sequelize.STRING,
 		validate: {
 			notEmpty: {
-				args: true,
-				msg: '内容不能为空'
-			}
-		}
-	},
-	html: {
-		type: Sequelize.TEXT,
-		validate: {
-			notEmpty: {
-				args: true,
-				msg: '内容不能为空'
-			}
-		}
-	},
-	tag: {
-		type: Sequelize.TEXT,
-		validate: {
-			notEmpty: {
-				args: true,
-				msg: '标签不能为空'
+				msg: '相册封面不能为空'
 			},
-		}
+        },
+        field: 'cover_img'
 	},
 	createTime: {
 		type: Sequelize.DATE,
@@ -55,4 +34,4 @@ const notes = sequelize.define('notes', {
 	},
 });
 
-module.exports = notes;
+module.exports = photoAlbum;
