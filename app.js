@@ -41,8 +41,13 @@ app.use(jwtKoa({
         /^\/api\/user\/login/,
         /^\/api\/user\/reg/,
         /^\/api\/upload/,
-        /^\/notes\/list/,
-        /^\/notes\/info/
+        /^\/api\/notes\/list/,
+        /^\/api\/notes\/info/,
+        /^\/api\/talk\/list/,
+        /^\/api\/talk\/info/,
+        /^\/api\/photo\/albumList/,
+        /^\/api\/photo\/photoList/,
+        /^\/upload/
     ]
 }))
 

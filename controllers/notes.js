@@ -59,6 +59,8 @@ const info = async (ctx, next) => {
         return false;
     }
 
+    result.dataValues.createTime = moment(result.dataValues.createTime).format('YYYY-MM-DD HH:mm:ss')
+    
     ctx.success(200, '获取成功', result);
 }
 
