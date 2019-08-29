@@ -122,7 +122,7 @@ const list = async (ctx, next) => {
             status: 1,
         },
         order: [
-            'id'
+            ['id','DESC']
         ]
     }).then(result => {
         const total = result.count;

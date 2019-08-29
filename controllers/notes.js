@@ -22,7 +22,7 @@ const list = async (ctx, next) => {
         limit: limit,
         offset: offset,
         order: [
-            'id'
+            ['id','DESC']
         ]
     })
 

@@ -24,7 +24,7 @@ const albumList = async (ctx, next) => {
         limit: limit,
         offset: offset,
         order: [
-            'id'
+            ['id','DESC']
         ]
     })
 
@@ -136,7 +136,7 @@ const photoList = async (ctx, next) => {
         limit: limit,
         offset: offset,
         order: [
-            'id'
+            ['id','DESC']
         ]
     })
 
