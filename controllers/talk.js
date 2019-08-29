@@ -86,7 +86,7 @@ const add = async (ctx, next) => {
     }
     catch(err){
         console.error(err)
-        ctx.error(214, '服务器出错');
+        ctx.error(214, err.message.split(',')[0]);
     }
 
 }
@@ -122,7 +122,7 @@ const update = async (ctx, next) => {
     }
     catch(err){
         console.error(err)
-        ctx.error(214, '服务器出错');
+        ctx.error(214, err.message.split(',')[0]);
     }
 }
 
