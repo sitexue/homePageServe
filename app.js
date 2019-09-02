@@ -47,7 +47,8 @@ app.use(jwtKoa({
         /^\/api\/talk\/info/,
         /^\/api\/photo\/albumList/,
         /^\/api\/photo\/photoList/,
-        /^\/upload/
+        /^\/upload/,
+        /^\/exposed/
     ]
 }))
 

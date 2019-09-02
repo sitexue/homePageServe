@@ -1,5 +1,10 @@
 const notes = require('../model/notes')
 const moment = require('moment')
+const fs = require('fs')
+const path = require("path")
+const { createDir, deleteFile } = require('../utils/utils')
+const compressing = require('compressing')
+const config = require('../config/config');
 
 const list = async (ctx, next) => {
     let {
@@ -146,7 +151,64 @@ const del = async (ctx, next) => {
         }
     })
     ctx.success(200, '删除成功');
+}
 
+const exportFile = async (ctx, next) => {
+    let {
+        ids = ''
+    } = ctx.request.body;
+
+    let idList = []
+    let flag = true
+    if (ids) {
+        idList = ids.split(',')
+        for (let index = 0; index < idList.length; index++) {
+            const item = idList[index]
+            if (!/^\d$/.test(item)) {
+                flag = false;
+                break;
+            }
+        }
+    }
+    if (!flag) {
+        ctx.error(214, '参数错误');
+        return false
+    }
+    const where = { status: 1 }
+    if (idList && idList.length > 0) {
+        where.id = idList
+    }
+    const result = await notes.findAndCountAll({
+        attributes: ['id', 'title', 'md'],
+        where,
+        order: [
+            ['id','DESC']
+        ]
+    })
+
+    const list = result.rows
+    const fileDor = `../${config.outerDir}/export`
+
+    if (!list || list.length < 1) {
+        ctx.error(214, '无数据可导出');
+    }
+
+    await deleteFile(path.join(__dirname, fileDor))
+    await createDir(path.join(__dirname, fileDor, '/学习笔记导出'))
+
+    list.forEach(item => {
+        const { md, title } = item
+        fs.writeFileSync(path.join(__dirname, fileDor, '/学习笔记导出/', title + ".md"), md)
+    })
+
+    compressing.zip.compressDir(path.join(__dirname, fileDor, '/学习笔记导出'), path.join(__dirname, fileDor, "学习笔记导出.zip"))
+    .then(
+        ctx.success(200, '导出', 'export/学习笔记导出.zip')
+    )
+    .catch(err => {
+        console.error(err)
+        ctx.error(214, err)
+    })
 }
 
 module.exports = [{
@@ -169,4 +231,8 @@ module.exports = [{
     method: 'delete',
     path: '/del',
     fn: del
+}, {
+    method: 'post',
+    path: '/exportFile',
+    fn: exportFile
 }]
